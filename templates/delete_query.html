@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block pagescripts %}
+
+  <link rel="stylesheet" href="/static/highlightjs/styles/railscasts.css">
+  <script src="/static/highlightjs/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <style>
+    pre, code {
+      background: #232323;
+      border:none;
+      font-family: monospace;
+    }
+  </style>
+
+{% endblock %}
+
+{% block container %}
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Are you sure to delete the following Query?</h3>
+    </div>
+    <div class="panel-body">
+      <form method="POST" action="{{ url_for("query_delete", id=query._id) }}">
+
+        <div class="row">
+          <div class="col-md-12">
+            <h1>{{ query.title }}</h1>
+            {% for tag in query.tags %}
+              <span class="label label-primary">{{ tag }}</span> 
+            {% endfor %}
+          </div>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+          <div class="col-md-12">
+            <pre style="font-size: 16px"><code class="sql">{{ query.sql }}</code></pre>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-1">
+            <button class="btn btn-danger" type="submit">Yes, Delete it!</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+    </div>
+  </div>
+
+
+{% endblock %}

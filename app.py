@@ -30,7 +30,7 @@ def query_add():
         print e
         return redirect(url_for("index"))
 
-@app.route("/query/<id>/")
+@app.route("/query/<id>/", methods=["GET", "DELETE"])
 def query_view(id):
     query = db.get_query_details(id)
     return render_template("view_query.html", query=query)
@@ -58,6 +58,16 @@ def query_edit(id):
         except Exception as e:
             print e
             return redirect(url_for("index"))
+
+@app.route("/query/<id>/delete/", methods=["GET", "POST"])
+def query_delete(id):
+    if request.method == "GET":
+        query = db.get_query_details(id)
+        return render_template("delete_query.html", query=query)
+    elif request.method == "POST":
+        db.delete_query(id)
+        flash("Delete Successful", "success")
+        return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run(debug=True)

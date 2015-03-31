@@ -39,7 +39,7 @@
             <td>
               <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
               <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-              <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+              <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
             </td>
           </tr>
         {% endfor %}

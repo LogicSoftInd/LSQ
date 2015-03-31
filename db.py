@@ -27,6 +27,9 @@ def update_query(id, title, sql, tags):
             "tags": _tags
             }}, upsert=False)
 
+def delete_query(id):
+    queries.remove({"_id": ObjectId(id)})
+
 def get_queries():
     _queries = []
     for query in queries.find():
