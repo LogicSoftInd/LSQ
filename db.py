@@ -6,7 +6,8 @@ db = client.lspl_queries
 queries = db.queries
 
 def insert_query(title, sql, tags):
-    _tags = [ tag.strip() for tag in tags.strip().split(",") ]
+    _tags = [ tag.strip() for tag in tags.strip().split(",") \
+            if len(tag.strip()) > 0]
     queries.insert({
             "title": title,
             "sql": sql,
@@ -14,7 +15,8 @@ def insert_query(title, sql, tags):
         })
 
 def update_query(id, title, sql, tags):
-    _tags = [ tag.strip() for tag in tags.strip().split(",") ]
+    _tags = [ tag.strip() for tag in tags.strip().split(",") \
+            if len(tag.strip()) > 0]
 
     queries.update({
         "_id": ObjectId(id)
