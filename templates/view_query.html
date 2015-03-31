@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block pagescripts %}
+
+  <link rel="stylesheet" href="/static/highlightjs/styles/railscasts.css">
+  <script src="/static/highlightjs/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <style>
+    pre, code {
+      background: #232323;
+      border:none;
+      font-family: monospace;
+    }
+  </style>
+
+{% endblock %}
+
+{% block container %}
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ query.title }}</h1>
+      {% for tag in query.tags %}
+        <span class="label label-primary">{{ tag }}</span> 
+      {% endfor %}
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <pre style="font-size: 16px"><code class="sql">{{ query.sql }}</code></pre>
+    </div>
+  </div>
+
+{% endblock %}

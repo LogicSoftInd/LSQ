@@ -1,5 +1,86 @@
 {% extends "base.html" %}
 
 {% block container %}
-  <h1>Hello</h1>
+
+  <form>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search Queries">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <hr/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover table-bordered">
+        <tr>
+          <th>Name</th>
+          <th>Tags</th>
+          <th style="width:18%"></th>
+        </tr>
+        {% for query in queries %}
+          <tr>
+            <td>{{query.title}}</td>
+            <td>
+            {% for tag in query.tags %}
+              <span class="label label-primary">{{tag}}</span> 
+            {% endfor %}
+            </td>
+            <td>
+              <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
+              <a href="#" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+              <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+  <div class="modal fade" id="add-query" tabindex="-1" role="dialog" aria-labelledby="addQuery" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addQueryLabel">Add Query</h4>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{{ url_for("query_add") }}">
+
+            <div class="row">
+              <div class="col-md-12">
+                <input name="title" class="form-control" placeholder="Title" type="text">
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <textarea name="sql" placeholder="Enter SQL" id="" class="form-control" name="" cols="30" rows="10"></textarea>
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-11">
+                <input name="tags" class="form-control" placeholder="Enter tags (comma separated)" type="text">
+              </div>
+              <div class="col-md-1">
+                <button class="btn btn-success" type="submit">Add</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
+

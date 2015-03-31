@@ -32,7 +32,6 @@
 
   <body>
 
-    <!-- Static navbar -->
     <div class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -42,33 +41,37 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">LQ</a>
+          <a class="navbar-brand" href="/"><strong>Q</strong></a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+          <ul class="nav navbar-nav navbar-right">
+            <li><a data-toggle="modal" href="#add-query"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Query</a></li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <div class="container">
       <div class="row">
-        {% with msgs = get_flashed_messages(with_categories=True) %}
-          {% if msgs %}
-            {% for category, msg in msgs %}
-              {% if category == "error" %}
-                <div class="alert alert-danger"><strong>ERROR</strong>: {{ msg }}</div>
-              {% elif category == "success" %}
-                <div class="alert alert-success"><strong>SUCCESS</strong>: {{ msg }} </div>
-              {% elif category == "info" %}
-                <div class="alert alert-info"><strong>INFO</strong>: {{ msg }} </div>
-              {% else %}
-                <div class="alert alert-default">{{ msg }} </div>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        <div class="col-md-12">
+          {% with msgs = get_flashed_messages(with_categories=True) %}
+            {% if msgs %}
+              {% for category, msg in msgs %}
+                {% if category == "error" %}
+                  <div class="alert alert-danger"><strong>ERROR</strong>: {{ msg }}</div>
+                {% elif category == "success" %}
+                  <div class="alert alert-success"><strong>SUCCESS</strong>: {{ msg }} </div>
+                {% elif category == "info" %}
+                  <div class="alert alert-info"><strong>INFO</strong>: {{ msg }} </div>
+                {% else %}
+                  <div class="alert alert-default">{{ msg }} </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
       </div>
 
       {% block container %}
