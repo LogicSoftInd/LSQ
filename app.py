@@ -23,6 +23,7 @@ def query_add():
             return redirect(url_for("index"))
 
         db.insert_query(title, sql, tags)
+        flash("Query Added!", "success")
         return redirect(url_for("index"))
 
     except Exception as e:
@@ -51,6 +52,7 @@ def query_edit(id):
                 return redirect(url_for("query_edit", id=id))
 
             db.update_query(id, title, sql, tags)
+            flash("Query Modified!", "success")
             return redirect(url_for("index"))
 
         except Exception as e:
