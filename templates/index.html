@@ -2,6 +2,7 @@
 
 {% block container %}
 
+  <!--
   <form>
     <div class="row">
       <div class="col-md-11">
@@ -19,7 +20,16 @@
   </form>
 
   <hr/>
+  -->
 
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-right">
+        <a class="btn btn-primary" data-toggle="modal" href="#add-query"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Query</a>
+      </div>
+    </div>
+  </div>
+  <br/>
   <div class="row">
     <div class="col-md-12">
       <table class="table table-hover table-bordered">
@@ -28,21 +38,27 @@
           <th>Tags</th>
           <th style="width:18%"></th>
         </tr>
-        {% for query in queries %}
+        {% if queries|length > 0 %}
+          {% for query in queries %}
+            <tr>
+              <td>{{query.title}}</td>
+              <td>
+              {% for tag in query.tags %}
+                <span class="label label-default">{{tag}}</span> 
+              {% endfor %}
+              </td>
+              <td>
+                <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
+                <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
           <tr>
-            <td>{{query.title}}</td>
-            <td>
-            {% for tag in query.tags %}
-              <span class="label label-primary">{{tag}}</span> 
-            {% endfor %}
-            </td>
-            <td>
-              <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
-              <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-              <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
-            </td>
+            <td class="text-center" colspan=3>No Queries added yet.</td>
           </tr>
-        {% endfor %}
+        {% endif %}
       </table>
     </div>
   </div>
