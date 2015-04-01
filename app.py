@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 import db
+import config
 
 app = Flask(__name__)
-app.secret_key = "IAmTheMasterOfMyFateIAmTheCaptainOfMySoul"
+app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
@@ -70,4 +71,4 @@ def query_delete(id):
         return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=config.debug, host="0.0.0.0")
