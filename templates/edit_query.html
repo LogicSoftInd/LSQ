@@ -28,11 +28,14 @@
         <br/>
 
         <div class="row">
-          <div class="col-md-10">
+          <div class="col-md-9">
             <input name="tags" class="form-control" placeholder="Enter tags (comma separated)" type="text" value="{{query.tags|join(", ")}}">
           </div>
           <div class="col-md-1">
             <button class="btn btn-success" type="submit">Edit</button>
+          </div>
+          <div class="col-md-1">
+            <a href="{{ url_for("index") }}" class="btn btn-danger" type="submit">cancel</a>
           </div>
         </div>
       </form>
