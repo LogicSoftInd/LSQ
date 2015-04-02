@@ -7,9 +7,12 @@ client = m.MongoClient(config.mongo_hostname, config.mongo_port)
 db = client[config.mongo_db]
 queries = db[config.mongo_collection]
 
-def insert_query(title, sql, tags, desc, who):
-    _tags = [ tag.strip() for tag in tags.strip().split(",") \
+def get_tags_list(tags):
+    return [ tag.strip() for tag in tags.strip().split(",") \
             if len(tag.strip()) > 0]
+
+def insert_query(title, sql, tags, desc, who):
+    _tags = get_tags_list(tags)
     queries.insert({
             "title": title,
             "sql": sql,
@@ -19,9 +22,7 @@ def insert_query(title, sql, tags, desc, who):
         })
 
 def update_query(id, title, sql, tags, desc, who):
-    _tags = [ tag.strip() for tag in tags.strip().split(",") \
-            if len(tag.strip()) > 0]
-
+    _tags = get_tags_list(tags)
     queries.update({
         "_id": ObjectId(id)
         },
@@ -37,10 +38,7 @@ def delete_query(id):
     queries.remove({"_id": ObjectId(id)})
 
 def get_queries():
-    _queries = []
-    for query in queries.find():
-        _queries.append(query)
-    return _queries
+    return list(queries.find())
 
 def get_query_details(id):
     return queries.find_one(ObjectId(id))
