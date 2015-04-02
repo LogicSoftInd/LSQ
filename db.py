@@ -1,9 +1,11 @@
 import pymongo as m
 from bson.objectid import ObjectId
 
-client = m.MongoClient()
-db = client.lspl_queries
-queries = db.queries
+import config
+
+client = m.MongoClient(config.mongo_hostname, config.mongo_port)
+db = client[config.mongo_db]
+queries = db[config.mongo_collection]
 
 def insert_query(title, sql, tags, desc, who):
     _tags = [ tag.strip() for tag in tags.strip().split(",") \

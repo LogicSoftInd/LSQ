@@ -1,2 +1,9 @@
+# Flask properties
 debug=True
-secret_key = "IAmTheMasterOfMyFateIAmTheCaptainOfMySoul"
+secret_key = "HelloWorld"
+
+# Mongo properties
+mongo_hostname="localhost"
+mongo_port=27017
+mongo_db="lspl_queries"
+mongo_collection="queries"
