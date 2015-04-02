@@ -19,12 +19,13 @@
 {% block container %}
 
   <a href="{{ url_for("index") }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="#" class="btn btn-success btn-sm" id="copy-query" data-clipboard-text="{{query.sql}}"><span class="glyphicon glyphicon-copy"></span> Copy to clipboard</a>
   <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+  <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
 
   <div class="row">
     <div class="col-md-12">
-      <h1>{{ query.title }}</h1>
+      <h1>{{ query.title }} </h1>
     </div>
   </div>
 
@@ -37,6 +38,7 @@
           <th>Tags</th>
           <th>Description</th>
           <th>Person Responsible</th>
+          <th style="width:10%"></th>
         </tr>
         <tr>
           <td>
@@ -56,5 +58,13 @@
       <pre style="font-size: 16px"><code class="sql">{{ query.sql }}</code></pre>
     </div>
   </div>
+
+  <script src="/static/zeroclipboard/ZeroClipboard.min.js"></script>
+
+  <script>
+    $(function() {
+      var client = new ZeroClipboard($("#copy-query"));
+    });
+  </script>
 
 {% endblock %}
