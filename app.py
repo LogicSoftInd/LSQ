@@ -18,12 +18,14 @@ def query_add():
         title = request.form["title"].strip()
         sql = request.form["sql"].strip()
         tags = request.form["tags"].strip()
+        desc = request.form["desc"].strip()
+        who = request.form["who"].strip()
 
         if len(title) == 0 or len(sql) == 0:
-            flash("title and sql are required fields", "error")
+            flash("Title and Sql are required fields", "error")
             return redirect(url_for("index"))
 
-        db.insert_query(title, sql, tags)
+        db.insert_query(title, sql, tags, desc, who)
         flash("Query Added!", "success")
         return redirect(url_for("index"))
 
@@ -47,14 +49,16 @@ def query_edit(id):
             title = request.form["title"].strip()
             sql = request.form["sql"].strip()
             tags = request.form["tags"].strip()
+            desc = request.form["desc"].strip()
+            who = request.form["who"].strip()
 
             if len(title) == 0 or len(sql) == 0:
                 flash("title and sql are required fields", "error")
                 return redirect(url_for("query_edit", id=id))
 
-            db.update_query(id, title, sql, tags)
+            db.update_query(id, title, sql, tags, desc, who)
             flash("Query Modified!", "success")
-            return redirect(url_for("index"))
+            return redirect(url_for("query_view", id=id))
 
         except Exception as e:
             print e

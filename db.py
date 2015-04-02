@@ -5,16 +5,18 @@ client = m.MongoClient()
 db = client.lspl_queries
 queries = db.queries
 
-def insert_query(title, sql, tags):
+def insert_query(title, sql, tags, desc, who):
     _tags = [ tag.strip() for tag in tags.strip().split(",") \
             if len(tag.strip()) > 0]
     queries.insert({
             "title": title,
             "sql": sql,
-            "tags": _tags
+            "tags": _tags,
+            "desc": desc,
+            "who": who
         })
 
-def update_query(id, title, sql, tags):
+def update_query(id, title, sql, tags, desc, who):
     _tags = [ tag.strip() for tag in tags.strip().split(",") \
             if len(tag.strip()) > 0]
 
@@ -24,7 +26,9 @@ def update_query(id, title, sql, tags):
         { "$set" : {
             "title": title,
             "sql": sql,
-            "tags": _tags
+            "tags": _tags, 
+            "desc": desc,
+            "who": who
             }}, upsert=False)
 
 def delete_query(id):

@@ -75,21 +75,31 @@
 
             <div class="row">
               <div class="col-md-12">
-                <input id="add-query-title" name="title" class="form-control" placeholder="Enter Title" type="text">
+                <input id="add-query-title" name="title" class="form-control" placeholder="Title" type="text">
               </div>
             </div>
             <br/>
 
             <div class="row">
               <div class="col-md-12">
-                <textarea name="sql" placeholder="Enter SQL" id="" class="form-control" name="" cols="30" rows="10"></textarea>
+                <textarea name="sql" placeholder="SQL" id="" class="form-control" name="" cols="30" rows="10"></textarea>
               </div>
             </div>
             <br/>
 
             <div class="row">
-              <div class="col-md-11">
-                <input name="tags" class="form-control" placeholder="Enter tags (comma separated)" type="text">
+              <div class="col-md-12">
+                <textarea name="desc" placeholder="Description" id="" class="form-control" name="" cols="30" rows="3"></textarea>
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-5">
+                <input name="who" class="form-control" placeholder="Person who wrote this query" type="text">
+              </div>
+              <div class="col-md-5">
+                <input name="tags" class="form-control" placeholder="Tags (comma separated)" type="text">
               </div>
               <div class="col-md-1">
                 <button class="btn btn-success" type="submit">Add</button>

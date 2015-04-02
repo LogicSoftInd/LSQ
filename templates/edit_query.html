@@ -28,7 +28,17 @@
         <br/>
 
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-md-12">
+            <textarea name="desc" placeholder="Description" id="" class="form-control" name="" cols="30" rows="3">{{query.desc}}</textarea>
+          </div>
+        </div>
+        <br/>
+
+        <div class="row">
+          <div class="col-md-4">
+            <input name="who" class="form-control" placeholder="Person who wrote this query" type="text" value="{{query.who}}">
+          </div>
+          <div class="col-md-5">
             <input name="tags" class="form-control" placeholder="Enter tags (comma separated)" type="text" value="{{query.tags|join(", ")}}">
           </div>
           <div class="col-md-1">

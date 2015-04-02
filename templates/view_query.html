@@ -18,19 +18,38 @@
 
 {% block container %}
 
+  <a href="{{ url_for("index") }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+
   <div class="row">
     <div class="col-md-12">
-      <a href="{{ url_for("index") }} " class="btn btn-sm btn-default"><span class="glyphicon glyphicon-chevron-left"</span></a>
       <h1>{{ query.title }}</h1>
-      {% for tag in query.tags %}
-        <span class="label label-primary">{{ tag }}</span> 
-      {% endfor %}
-      <br/>
-      <br/>
     </div>
   </div>
 
-  <hr/>
+  <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Tags</th>
+          <th>Description</th>
+          <th>Person Responsible</th>
+        </tr>
+        <tr>
+          <td>
+            {% for tag in query.tags %}
+              <span class="label label-primary">{{ tag }}</span> 
+            {% endfor %}
+          </td>
+          <td>{{ query.desc }}</td>
+          <td>{{ query.who }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
