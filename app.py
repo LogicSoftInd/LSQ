@@ -4,7 +4,7 @@ import db
 import config
 
 app = Flask(__name__)
-app.secret_key = config.secret_key
+app.secret_key = config.flask_secret_key
 
 @app.route("/")
 def index():
@@ -53,7 +53,7 @@ def query_edit(id):
             who = request.form["who"].strip()
 
             if len(title) == 0 or len(sql) == 0:
-                flash("title and sql are required fields", "error")
+                flash("Title and Sql are required fields", "error")
                 return redirect(url_for("query_edit", id=id))
 
             db.update_query(id, title, sql, tags, desc, who)
@@ -76,4 +76,4 @@ def query_delete(id):
         return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(debug=config.debug, host="0.0.0.0")
+    app.run(debug=config.flask_debug, port=config.flask_port, host="0.0.0.0")

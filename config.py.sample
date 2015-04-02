@@ -1,9 +1,10 @@
 # Flask properties
-debug=True
-secret_key = "HelloWorld"
+flask_debug=True
+flask_port=5000
+flask_secret_key = "HelloWorld"
 
 # Mongo properties
 mongo_hostname="localhost"
 mongo_port=27017
-mongo_db="lspl_queries"
+mongo_db="company_queries"
 mongo_collection="queries"
