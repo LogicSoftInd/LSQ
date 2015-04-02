@@ -13,7 +13,6 @@ def index():
 
 @app.route("/query/", methods=["POST"])
 def query_add():
-
     try:
         title = request.form["title"].strip()
         sql = request.form["sql"].strip()
@@ -31,6 +30,7 @@ def query_add():
 
     except Exception as e:
         print e
+        flash("Fatal error. Contact Administrator", "error")
         return redirect(url_for("index"))
 
 @app.route("/query/<id>/", methods=["GET", "DELETE"])
@@ -62,6 +62,7 @@ def query_edit(id):
 
         except Exception as e:
             print e
+            flash("Fatal error. Contact Administrator", "error")
             return redirect(url_for("index"))
 
 @app.route("/query/<id>/delete/", methods=["GET", "POST"])
