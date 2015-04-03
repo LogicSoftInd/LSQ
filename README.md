@@ -52,3 +52,9 @@ The purpose of writing LSQ was to centralize such queries.
 
 Point your browser to `http://localhost:<port>` and you're good
 to go.
+
+## Screenshots
+
+![Landing page](http://i.imgur.com/VBFa3Wd.png)
+
+![Individual Query Page](http://i.imgur.com/XSK11t1.png)
