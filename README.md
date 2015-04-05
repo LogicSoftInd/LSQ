@@ -58,3 +58,9 @@ to go.
 ![Landing page](http://i.imgur.com/VBFa3Wd.png)
 
 ![Individual Query Page](http://i.imgur.com/XSK11t1.png)
+
+## Roadmap
+
+* Full Text Search
+* Version Control
+* Access Control
