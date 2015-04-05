@@ -1,7 +1,7 @@
 # Flask properties
 flask_debug=True
 flask_port=5000
-flask_secret_key = "HelloWorld"
+flask_secret_key = ""
 
 # Mongo properties
 mongo_hostname="localhost"
