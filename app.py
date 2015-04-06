@@ -58,7 +58,7 @@ def query_edit(id):
 
             db.update_query(id, title, sql, tags, desc, who)
             flash("Query Modified!", "success")
-            return redirect(url_for("query_view", id=id))pr
+            return redirect(url_for("query_view", id=id))
 
         except Exception as e:
             app.logger.error("Fatal error", exc_info=True)
