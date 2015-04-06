@@ -1,4 +1,4 @@
-# LSQ
+# LSQ [![Build Status](https://travis-ci.org/LogicSoftInd/LSQ.svg?branch=master)](https://travis-ci.org/LogicSoftInd/LSQ)
 > Pronounced _Less Q_
 
 ## Purpose
