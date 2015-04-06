@@ -29,7 +29,7 @@ def query_add():
         return redirect(url_for("index"))
 
     except Exception as e:
-        print e
+        app.logger.error("Fatal error", exc_info=True)
         flash("Fatal error. Contact Administrator", "error")
         return redirect(url_for("index"))
 
