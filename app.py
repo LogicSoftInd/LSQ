@@ -58,10 +58,10 @@ def query_edit(id):
 
             db.update_query(id, title, sql, tags, desc, who)
             flash("Query Modified!", "success")
-            return redirect(url_for("query_view", id=id))
+            return redirect(url_for("query_view", id=id))pr
 
         except Exception as e:
-            print e
+            app.logger.error("Fatal error", exc_info=True)
             flash("Fatal error. Contact Administrator", "error")
             return redirect(url_for("index"))
 
