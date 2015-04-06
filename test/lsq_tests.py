@@ -1,7 +1,7 @@
 import unittest
 
 # Import the application
-from app import app as lsq
+import app as lsq
 
 class LSQTestCase(unittest.TestCase):
 
