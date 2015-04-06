@@ -76,4 +76,4 @@ def query_delete(id):
         return redirect(url_for("index"))
 
 if __name__ == "__main__":
-    app.run(debug=config.flask_debug, port=config.flask_port, host="0.0.0.0")
+    app.run(debug=config.flask_debug, port=config.flask_port, host=config.flask_bind_address)
