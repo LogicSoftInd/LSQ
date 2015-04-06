@@ -7,6 +7,7 @@ class LSQTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = lsq.app.test_client()
+        self.app.config['SECRET_KEY'] = 'test1234'
 
     def tearDown(self):
         pass
