@@ -3,10 +3,10 @@ language: python
 python:
   - "2.6"
   - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "nightly"
+# - "3.2"
+#  - "3.3"
+#  - "3.4"
+#  - "nightly"
   
 # Installing dependencies
 install: "pip install -r requirements.txt"
@@ -17,7 +17,8 @@ services:
 
 # Add our custom auth for mongodb for the test case
 before_script:
-  - sleep 15
+  - sleep 5
+  - cp config.py.sample config.py
   - mongo mydb_test --eval 'db.addUser("lsq", "lsq");'
   
 # command to run tests
