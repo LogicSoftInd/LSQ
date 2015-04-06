@@ -18,6 +18,7 @@ services:
 # Add our custom auth for mongodb for the test case
 before_script:
   - sleep 15
+  - cp config.py.sample config.py
   - mongo mydb_test --eval 'db.addUser("lsq", "lsq");'
   
 # command to run tests
