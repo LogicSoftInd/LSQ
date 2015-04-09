@@ -62,5 +62,6 @@ to go.
 ## Roadmap
 
 * Full Text Search
+* Query Execution
 * Version Control
 * Access Control
