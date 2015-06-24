@@ -5,6 +5,11 @@ import config
 
 client = m.MongoClient(config.mongo_hostname, config.mongo_port)
 db = client[config.mongo_db]
+
+if (len(config.mongo_username.strip()) > 0
+        and len(config.mongo_password.strip()) > 0):
+    db.authenticate(config.mongo_username, config.mongo_password)
+
 queries = db[config.mongo_collection]
 
 def get_tags_list(tags):
