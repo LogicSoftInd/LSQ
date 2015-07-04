@@ -2,10 +2,19 @@
 flask_debug=True
 flask_bind_address="0.0.0.0"
 flask_port=5000
+# For security purposes, this field should be sufficiently randomized
 flask_secret_key=""
 
 # Mongo properties
 mongo_hostname="localhost"
 mongo_port=27017
 mongo_db="company_queries"
-mongo_collection="queries"
+query_mongo_collection="queries"
+database_mongo_collection="databases"
+
+# Whether or not running queries is allowed
+enable_run_query = False
+
+# The database engine should be DB-API2 compatible module that can be
+# imported.  More info: https://wiki.python.org/moin/DbApiFaq
+database_engine = 'psycopg2'
