@@ -36,6 +36,20 @@
 
         <div class="row">
           <div class="col-md-12">
+            <input id="add-database-user" name="user" class="form-control" placeholder="User" type="text"{% if database.user is not none %}  value="{{database.user}}"{% endif %}>
+          </div>
+        </div>
+        <br/>
+
+        <div class="row">
+          <div class="col-md-12">
+            <input id="add-database-password" name="password" class="form-control" placeholder="Password" type="password"{% if database.password %} value="{{database.password}}"{% endif %}>
+          </div>
+        </div>
+        <br/>
+
+        <div class="row">
+          <div class="col-md-12">
             <textarea name="desc" placeholder="Description" id="" class="form-control" name="" cols="30" rows="3">{{database.desc}}</textarea>
           </div>
         </div>
