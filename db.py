@@ -2,6 +2,7 @@ import pymongo as m
 from bson.objectid import ObjectId
 
 import config
+from aes import AESCipher
 
 client = m.MongoClient(config.mongo_hostname, config.mongo_port)
 db = client[config.mongo_db]
@@ -63,24 +64,43 @@ def get_queries():
 def get_query_details(id):
     return queries.find_one(ObjectId(id))
 
-def insert_database(name, hostname, port, desc):
+def insert_database(name, hostname, port=None, user=None, password=None, desc=None):
+    if password:
+        crypt = AESCipher(config.flask_secret_key)
+        encrypted_password = crypt.encrypt(password)
+    else:
+        encrypted_password = None
+
     databases.insert({
             "name": name,
             "hostname": hostname,
             "port": port,
+            "user": user, 
+            "password": encrypted_password,
             "desc": desc
         })
 
-def update_database(id, name, hostname, port, desc):
+def update_database(id, name, hostname, port=None, user=None, password=None, desc=None):
+
+    db_set = {
+        "name": name,
+        "hostname": hostname,
+        "port": port,
+        "user": user, 
+        "desc": desc
+    }
+
+    if password:
+        crypt = AESCipher(config.flask_secret_key)
+        encrypted_password = crypt.encrypt(password)
+        db_set["password"] = encrypted_password
+    else:
+        encrypted_password = None
+
     databases.update({
         "_id": ObjectId(id)
         },
-        { "$set" : {
-                "name": name,
-                "hostname": hostname,
-                "port": port,
-                "desc": desc
-            }}, upsert=False)
+        { "$set" : db_set}, upsert=False)
 
 def delete_database(id):
     databases.remove({"_id": ObjectId(id)})

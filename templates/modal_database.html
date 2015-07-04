@@ -1,0 +1,62 @@
+  <div class="modal fade" id="add-database" tabindex="-1" role="dialog" aria-labelledby="addDatabase" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addDatabaseLabel">Add Database</h4>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{{ url_for("database_add") }}">
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="add-database-name" name="name" class="form-control" placeholder="Name" type="text">
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="add-database-hostname" name="hostname" class="form-control" placeholder="Host/File Name" type="text">
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="add-database-port" name="port" class="form-control" placeholder="Port" type="text">
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="add-database-user" name="user" class="form-control" placeholder="User" type="text">
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <input id="add-database-password" name="port" class="form-control" placeholder="Password" type="password">
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-12">
+                <textarea name="desc" placeholder="Description" id="" class="form-control" name="" cols="30" rows="3"></textarea>
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div class="col-md-1">
+                <button class="btn btn-success" type="submit">Add</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

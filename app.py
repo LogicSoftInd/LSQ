@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 
 import db
 import config
+from aes import AESCipher
 
 app = Flask(__name__)
 app.secret_key = config.flask_secret_key
@@ -58,8 +59,9 @@ def query_add():
 
 @app.route("/query/<id>/", methods=["GET", "DELETE"])
 def query_view(id):
+    databases = db.get_databases()
     query = db.get_query_details(id)
-    return render_template("view_query.html", query=query)
+    return render_template("view_query.html", databases=databases, query=query)
 
 @app.route("/query/<id>/json/", methods=["GET"])
 def query_json_view(id):
@@ -116,26 +118,74 @@ def query_run(id, database_id):
     if config.enable_run_query:
         database = db.get_database_details(database_id)
         query = db.get_query_details(id)
-        query_results = 'wut wut'
+        query_results = None
+        query_results_cols = []
+        error = None
+
+        # try and import the DB engine
+        try: 
+            dbapi2 = __import__(config.database_engine)
+        except ImportError as e:
+            app.logger.error("Fatal error", exc_info=True)
+            flash("Fatal error. Contact Administrator", "error")
+            return redirect(url_for("index"))
+        finally:
+            # try and make the connection and run the query
+            try:
+                if database.get("password"):
+                    crypt = AESCipher(config.flask_secret_key)
+                    password = crypt.decrypt(database.get("password"))
+                else:
+                    password = None
+                
+                connect = dbapi2.connect(database=database.get("name"), 
+                    host=database.get("hostname"), 
+                    port=database.get("port"), 
+                    user=database.get("user"), 
+                    password=password)
+                curse = connect.cursor()
+                curse.execute(query["sql"])
+                query_results = curse.fetchall()
+                # Assemble column names so the table makes sense
+                for col in curse.description:
+                    query_results_cols.append(col.name)
+
+            except dbapi2.ProgrammingError, e:
+                # TODO: Exceptions don't seem to be standard in DB-API2, 
+                # so this will likely have to be checked against other
+                # engines.  The following works with psycopg2.
+                if hasattr(e, "pgerror"):
+                    error = e.pgerror
+                else:
+                    error = "There was an error with your query."
+            except dbapi2.Error as e:
+                if hasattr(e, "pgerror"):
+                    error = e.pgerror
+                else:
+                    error = e.msg
+
     else: 
         database = None
         query = None
         query_results = None
-    return render_template("run_query.html", query=query, database=database, query_results=query_results)
+        error = None
+    return render_template("run_query.html", query=query, database=database, query_results=query_results, query_results_cols=query_results_cols, error=error)
 
 @app.route("/database/", methods=["POST"])
 def database_add():
     try:
         name = request.form.get("name").strip()
         hostname = request.form.get("hostname").strip()
-        port = request.form.get("port").strip()
-        desc = request.form.get("desc").strip()
+        port = request.form.get("port", "").strip()
+        user = request.form.get("user", "").strip()
+        password = request.form.get("password", "").strip()
+        desc = request.form.get("desc", "").strip()
 
         if not name or not hostname:
             flash("Name and Host/File Name are required fields", "error")
             return redirect(url_for("index"))
 
-        db.insert_database(name, hostname, port, desc)
+        db.insert_database(name, hostname, port, user, password, desc)
         flash("Database Added!", "success")
         return redirect(url_for("index"))
 
@@ -148,20 +198,26 @@ def database_add():
 def database_edit(id):
     if request.method == "GET":
         database = db.get_database_details(id)
+        if database['password']:
+            database['password'] = 'placeholder'
         return render_template("edit_database.html", database=database)
     elif request.method == "POST":
         try:
             id = request.form["id"].strip()
-            name = request.form.get("name", "").strip()
-            hostname = request.form.get("hostname", "").strip()
+            name = request.form.get("name").strip()
+            hostname = request.form.get("hostname").strip()
             port = request.form.get("port", "").strip()
+            user = request.form.get("user", "").strip()
+            password = request.form.get("password", "").strip()
+            if password == 'placeholder':
+                password = None
             desc = request.form.get("desc", "").strip()
 
             if not name or not hostname:
                 flash("Name and Host/File Name are required fields", "error")
                 return redirect(url_for("database_edit", id=id))
 
-            db.update_database(id, name, hostname, port, desc)
+            db.update_database(id, name, hostname, port, user, password, desc)
             flash("Database Modified!", "success")
             return redirect(url_for("database_view", id=id))
 
