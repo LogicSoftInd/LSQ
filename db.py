@@ -41,16 +41,15 @@ def update_query(id, title, sql, tags, desc, who):
 
 def get_queries_for_search(searchword):
     title =list(queries.find({"title":searchword}))
-    who = list(queries.find({"who":searchword}))
     tags = list(queries.find({"tags":searchword}))
-    
+    who = list(queries.find({"who":searchword}))
 
     if len(title) > 0:
         return title
-    elif len(who) > 0:
-        return who
     elif len(tags) > 0:
         return tags
+    elif len(who) > 0:
+        return who
     else:
         return get_queries()
     

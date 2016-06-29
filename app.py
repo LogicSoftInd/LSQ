@@ -16,7 +16,6 @@ def index():
         else:
             queries = db.get_queries()
     
-
         return render_template("index.html", queries=queries, issearchword=searchword)
 
 @app.route("/query/", methods=["POST"])
