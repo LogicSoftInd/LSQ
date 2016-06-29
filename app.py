@@ -8,8 +8,13 @@ app.secret_key = config.flask_secret_key
 
 @app.route("/")
 def index():
-    queries = db.get_queries()
-    return render_template("index.html", queries=queries)
+        searchword = request.args.get('search', '')
+        if len(searchword) > 0:
+            queries = db.get_queries_for_search(searchword)
+            return render_template("index.html", queries=queries)
+        else:
+            queries = db.get_queries()
+            return render_template("index.html", queries=queries)
 
 @app.route("/query/", methods=["POST"])
 def query_add():
