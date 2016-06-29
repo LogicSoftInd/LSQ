@@ -9,12 +9,15 @@ app.secret_key = config.flask_secret_key
 @app.route("/")
 def index():
         searchword = request.args.get('search', '')
-        if len(searchword) > 0:
+        if (searchword):
             queries = db.get_queries_for_search(searchword)
-            return render_template("index.html", queries=queries)
+            if len(queries)== len(db.get_queries()):
+                flash("No record found", "error")
         else:
             queries = db.get_queries()
-            return render_template("index.html", queries=queries)
+    
+
+        return render_template("index.html", queries=queries, issearchword=searchword)
 
 @app.route("/query/", methods=["POST"])
 def query_add():

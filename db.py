@@ -43,6 +43,7 @@ def get_queries_for_search(searchword):
     title =list(queries.find({"title":searchword}))
     who = list(queries.find({"who":searchword}))
     tags = list(queries.find({"tags":searchword}))
+    
 
     if len(title) > 0:
         return title
@@ -50,8 +51,9 @@ def get_queries_for_search(searchword):
         return who
     elif len(tags) > 0:
         return tags
-
-
+    else:
+        return get_queries()
+    
 def delete_query(id):
     queries.remove({"_id": ObjectId(id)})
 
