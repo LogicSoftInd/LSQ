@@ -11,11 +11,12 @@ def index():
         searchword = request.args.get('search', '')
         if (searchword):
             queries = db.get_queries_for_search(searchword)
-            if len(queries)== len(db.get_queries()):
+            if len(queries) == 0:
                 flash("No record found", "error")
+                queries = db.get_queries()
         else:
             queries = db.get_queries()
-    
+        
         return render_template("index.html", queries=queries, issearchword=searchword)
 
 @app.route("/query/", methods=["POST"])
