@@ -26,7 +26,7 @@
   <div class="col-md-4">
   <form action="" method="GET">
     <div class="input-group">
-      <input type="text" name="search" placeholder="Search" class="form-control" maxlength="50">
+      <input type="text" name="search" value="{{issearchword}}" placeholder="Search" class="form-control" maxlength="50">
       <span class="input-group-btn">
         <button class="btn btn-default" >
           <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -53,6 +53,7 @@
         <tr>
           <th>Name</th>
           <th>Tags</th>
+          <th width="10%">Person</th>
           <th style="width:18%"></th>
         </tr>
         {% if queries|length > 0 %}
@@ -64,6 +65,7 @@
                 <span class="label label-default">{{tag}}</span> 
               {% endfor %}
               </td>
+              <td>{{query.who}}</td>
               <td>
                 <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
                 <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>

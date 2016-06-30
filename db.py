@@ -40,9 +40,9 @@ def update_query(id, title, sql, tags, desc, who):
             }}, upsert=False)
 
 def get_queries_for_search(searchword):
-    title =list(queries.find({"title":searchword}))
-    tags = list(queries.find({"tags":searchword}))
-    who = list(queries.find({"who":searchword}))
+    title =list(queries.find({"title":{"$regex": searchword, "$options": "$i"}}))
+    tags = list(queries.find({"tags":{"$regex": searchword, "$options":"$i" }}))
+    who = list(queries.find({"who":{"$regex": searchword, "$options":"$i" }}))
 
     if len(title) > 0:
         return title
@@ -51,7 +51,7 @@ def get_queries_for_search(searchword):
     elif len(who) > 0:
         return who
     else:
-        return get_queries()
+        return []
     
 def delete_query(id):
     queries.remove({"_id": ObjectId(id)})
