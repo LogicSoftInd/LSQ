@@ -35,11 +35,11 @@
       </form>
     </div>
   </div>
+    <div class="col-md-2">
   {% if issearchword %}
-  <div class="col-md-2">
     <a class="btn btn-primary" href="{{ url_for("index") }}">Clear</a>
+    {% endif %}
   </div>
-  {% endif %}
     <div class="col-md-6">
       <div class="pull-right">
         <a class="btn btn-primary" data-toggle="modal" href="#add-query"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Query</a>
