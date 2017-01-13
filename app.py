@@ -19,6 +19,19 @@ def index():
         
         return render_template("index.html", queries=queries, issearchword=searchword)
 
+@app.route("/queries.json/")
+def query_list():
+    queries = db.get_queries()
+    qlist = [
+                {
+                    "id":str(query["_id"]), 
+                    "title":query['title'], 
+                    "created_by":query['who'], 
+                    "tags":query['tags']
+                } 
+            for query in queries]
+    return jsonify({ "queries": qlist });
+
 @app.route("/query/", methods=["POST"])
 def query_add():
     try:
