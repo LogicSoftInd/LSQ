@@ -57,6 +57,11 @@
       <pre style="font-size: 16px"><code class="sql">{{ query.sql }}</code></pre>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <a href="{{ url_for("query_json_view", id=query._id) }}">JSON View</a>
+    </div>
+  </div>
 
   <script src="/static/zeroclipboard/ZeroClipboard.min.js"></script>
 
