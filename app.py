@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 
 import db
 import config
@@ -45,6 +45,18 @@ def query_add():
 def query_view(id):
     query = db.get_query_details(id)
     return render_template("view_query.html", query=query)
+
+@app.route("/query/<id>/json/", methods=["GET"])
+def query_json_view(id):
+    query = db.get_query_details(id)
+    json_val = {
+        "title":query['title'],
+        "query":query['sql'],
+        "tags":query['tags'],
+        "description":query['desc'],
+        "created_by":query['who']
+    }
+    return jsonify(json_val)
 
 @app.route("/query/<id>/edit/", methods=["GET", "POST"])
 def query_edit(id):
