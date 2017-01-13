@@ -56,7 +56,6 @@ def query_json_view(id):
         "description":query['desc'],
         "created_by":query['who']
     }
-    # return json.dumps(json_val);
     return jsonify(json_val)
 
 @app.route("/query/<id>/edit/", methods=["GET", "POST"])
