@@ -22,16 +22,14 @@ def index():
 @app.route("/queries.json/")
 def query_list():
     queries = db.get_queries()
-    qlist = []
-    for query in queries:
-        qlist.append(
-            {
-                "id":str(query["_id"]),
-                "title":query['title'],
-                "created_by":query['who'],
-                "tags":query['tags']
-            }
-        )
+    qlist = [
+                {
+                    "id":str(query["_id"]), 
+                    "title":query['title'], 
+                    "created_by":query['who'], 
+                    "tags":query['tags']
+                } 
+            for query in queries]
     return jsonify({ "queries": qlist });
 
 @app.route("/query/", methods=["POST"])
