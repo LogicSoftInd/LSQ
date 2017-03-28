@@ -9,5 +9,6 @@ mongo_hostname="localhost"
 mongo_port=27017
 mongo_db="company_queries"
 mongo_collection="queries"
+mongo_collection_database="databases"
 mongo_username=""
 mongo_password=""
