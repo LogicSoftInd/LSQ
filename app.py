@@ -169,6 +169,7 @@ def query_run(id, database_id):
         database = None
         query = None
         query_results = None
+        query_results_cols = None
         error = None
     return render_template("run_query.html", query=query, database=database, query_results=query_results, query_results_cols=query_results_cols, error=error)
 
