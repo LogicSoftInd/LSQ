@@ -171,7 +171,7 @@ def query_run(id, database_id):
         query_results = None
         query_results_cols = None
         error = None
-    return render_template("run_query.html", query=query, database=database, query_results=query_results, query_results_cols=query_results_cols, error=error)
+    return render_template("run_query.html", run_enabled=config.enable_run_query, query=query, database=database, query_results=query_results, query_results_cols=query_results_cols, error=error)
 
 @app.route("/database/", methods=["POST"])
 def database_add():
