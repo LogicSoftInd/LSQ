@@ -20,7 +20,7 @@ def index():
 
         databases = db.get_databases()
         
-        return render_template("index.html", queries=queries, issearchword=searchword)
+        return render_template("index.html", databases=databases, queries=queries, issearchword=searchword)
 
 @app.route("/queries.json/")
 def query_list():
