@@ -1,7 +1,7 @@
 import base64
 import hashlib
-from crypto import Random
-from crypto.Cipher import AES
+from Crypto import Random
+from Crypto.Cipher import AES
 
 class AESCipher(object):
 
