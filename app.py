@@ -25,6 +25,7 @@ def index():
 @app.route("/queries.json/")
 def query_list():
     queries = db.get_queries()
+    databases = db.get_databases()
     qlist = [
                 {
                     "id":str(query["_id"]), 

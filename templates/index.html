@@ -100,7 +100,7 @@
               {% endfor %}
               </td>
               <td>{{query.who}}</td>
-              <td>
+              <td class="col-md-3 btn-group" role="group">
                 <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
