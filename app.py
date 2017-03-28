@@ -236,7 +236,7 @@ def database_view(id):
 def database_delete(id):
     if request.method == "GET":
         database = db.get_database_details(id)
-        return render_template("delete_database.html", query=query)
+        return render_template("delete_database.html", database=database)
     elif request.method == "POST":
         db.delete_database(id)
         flash("Delete Successful", "success")
