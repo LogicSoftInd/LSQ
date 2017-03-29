@@ -127,43 +127,47 @@ def query_run(id, database_id):
         try: 
             dbapi2 = __import__(config.database_engine)
         except ImportError as e:
-            app.logger.error("Fatal error", exc_info=True)
+            app.logger.error("Fatal error. Could not import DB engine.", exc_info=True)
             flash("Fatal error. Contact Administrator", "error")
             return redirect(url_for("index"))
-        finally:
-            # try and make the connection and run the query
-            try:
-                if database.get("password"):
-                    crypt = AESCipher(config.flask_secret_key)
-                    password = crypt.decrypt(database.get("password"))
-                else:
-                    password = None
-                
-                connect = dbapi2.connect(database=database.get("name"), 
-                    host=database.get("hostname"), 
-                    port=database.get("port"), 
-                    user=database.get("user"), 
-                    password=password)
-                curse = connect.cursor()
-                curse.execute(query["sql"])
-                query_results = curse.fetchall()
-                # Assemble column names so the table makes sense
-                for col in curse.description:
-                    query_results_cols.append(col.name)
+        
+        # try and make the connection and run the query
+        try:
+            if database.get("password"):
+                crypt = AESCipher(config.flask_secret_key)
+                password = crypt.decrypt(database.get("password"))
+            else:
+                password = None
+            
+            connect = dbapi2.connect(database=database.get("name"), 
+                host=database.get("hostname"), 
+                port=database.get("port"), 
+                user=database.get("user"), 
+                password=password)
+            
+            curse = connect.cursor()
+            curse.execute(query["sql"])
+            query_results = curse.fetchall()
 
-            except dbapi2.ProgrammingError, e:
-                # TODO: Exceptions don't seem to be standard in DB-API2, 
-                # so this will likely have to be checked against other
-                # engines.  The following works with psycopg2.
-                if hasattr(e, "pgerror"):
-                    error = e.pgerror
-                else:
-                    error = "There was an error with your query."
-            except dbapi2.Error as e:
-                if hasattr(e, "pgerror"):
-                    error = e.pgerror
-                else:
-                    error = e.msg
+            # Assemble column names so the table makes sense
+            for col in curse.description:
+                query_results_cols.append(col.name)
+
+        except dbapi2.ProgrammingError, e:
+            # TODO: Exceptions don't seem to be standard in DB-API2, 
+            # so this will likely have to be checked against other
+            # engines.  The following works with psycopg2.
+            if hasattr(e, "pgerror"):
+                error = e.pgerror
+            else:
+                error = "There was an error with your query."
+        except dbapi2.Error as e:
+            if hasattr(e, "pgerror"):
+                error = e.pgerror or e.message
+                app.logger.error(error)
+            else:
+                error = e.msg
+                app.logger.error(error)
 
     else: 
         database = None
