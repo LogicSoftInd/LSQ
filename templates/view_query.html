@@ -18,10 +18,27 @@
 
 {% block container %}
 
-  <a href="{{ url_for("index") }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-  <a href="#" class="btn btn-success btn-sm" id="copy-query" data-clipboard-text="{{query.sql}}"><span class="glyphicon glyphicon-copy"></span> Copy to clipboard</a>
-  <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-  <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+  <div>
+    <a href="{{ url_for("index") }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+    <a href="#" class="btn btn-success btn-sm" id="copy-query" data-clipboard-text="{{query.sql}}"><span class="glyphicon glyphicon-copy"></span> Copy to clipboard</a>
+    <div class="btn-group" role="group">
+      <a type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-play"></span> Run...
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+      {% if databases %}
+        {% for database in databases %}
+          <li><a href="{{ url_for("query_run", id=query._id, database_id=database._id ) }}">{{ database.hostname }}:{{ database.port }}/{{ database.name }}</a></li>
+        {% endfor %}
+      {% else %}
+          <li><a data-toggle="modal" href="#add-database">Add Database</a></li>
+      {% endif %}
+      </ul>
+    </div>
+    <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+    <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
@@ -63,11 +80,20 @@
     </div>
   </div>
 
+  {% include "modal_database.html" %}
+
+  {% include "modal_database.html" %}
+
   <script src="/static/zeroclipboard/ZeroClipboard.min.js"></script>
 
   <script>
     $(function() {
       var client = new ZeroClipboard($("#copy-query"));
+    });
+    $(document).ready(function() {
+      $('#add-database').on('shown.bs.modal', function () {
+        $('#add-database-title').focus()
+      });
     });
   </script>
 

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block pagescripts %}
+
+  <link rel="stylesheet" href="/static/highlightjs/styles/railscasts.css">
+  <script src="/static/highlightjs/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <style>
+    pre, code {
+      background: #232323;
+      border:none;
+      font-family: monospace;
+    }
+  </style>
+
+{% endblock %}
+
+{% block container %}
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Are you sure to delete this Database?</h3>
+    </div>
+    <div class="panel-body">
+      <form method="POST" action="{{ url_for("database_delete", id=database._id) }}">
+
+        <div class="row">
+          <div class="col-md-12">
+            <h1>{{ database.name }}</h1>
+          </div>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+          <div class="col-md-1">
+            <button class="btn btn-danger" type="submit">Yes, Delete it!</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+    </div>
+  </div>
+
+
+{% endblock %}

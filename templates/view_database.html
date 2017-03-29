@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block pagescripts %}
+
+  <link rel="stylesheet" href="/static/highlightjs/styles/railscasts.css">
+  <script src="/static/highlightjs/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+{% endblock %}
+
+{% block container %}
+
+  <a href="{{ url_for("index") }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="{{ url_for("database_edit", id=database._id) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+  <a href="{{ url_for("database_delete", id=database._id) }}" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{{ database.title }} </h1>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Host/File Name</th>
+          <th>Port</th>
+          <th>User</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>{{ database.hostname }}</td>
+          <td>{{ database.port }}</td>
+          <td>{{ database.user }}</td>
+          <td>{{ database.desc }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

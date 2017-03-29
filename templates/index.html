@@ -43,10 +43,44 @@
     <div class="col-md-6">
       <div class="pull-right">
         <a class="btn btn-primary" data-toggle="modal" href="#add-query"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Query</a>
+        <a class="btn btn-primary" data-toggle="modal" href="#add-database"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Database</a>
       </div>
     </div>
   </div>
   <br/>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover table-bordered">
+        <tr>
+          <th>Name</th>
+          <th>Host/File Name</th>
+          <th>Port</th>
+          <th style="width:18%"></th>
+        </tr>
+        {% if databases|length > 0 %}
+          {% for database in databases %}
+            <tr>
+              <td>{{database.name}}</td>
+              <td>{{database.hostname}}</td>
+              <td>{{database.port}}</td>
+              <td>
+                <a href="{{ url_for("database_view", id=database._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
+                <a href="{{ url_for("database_edit", id=database._id) }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                <a href="{{ url_for("database_delete", id=database._id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan=4>No Databases added yet. For Queries to run from LSQ, they need to be associated to a database.</td>
+          </tr>
+        {% endif %}
+      </table>
+    </div>
+  </div>
+  <br />
+
   <div class="row">
     <div class="col-md-12">
       <table class="table table-hover table-bordered">
@@ -66,8 +100,19 @@
               {% endfor %}
               </td>
               <td>{{query.who}}</td>
-              <td>
+              <td class="col-md-3 btn-group" role="group">
                 <a href="{{ url_for("query_view", id=query._id) }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-eye-open"></span> View</a>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-success dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-play"></span> Run...
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                  {% for database in databases %}
+                    <li><a href="{{ url_for("query_run", id=query._id, database_id=database._id ) }}">{{ database.hostname }}:{{ database.port }}/{{ database.name }}</a></li>
+                  {% endfor %}
+                  </ul>
+                </div>
                 <a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                 <a href="{{ url_for("query_delete", id=query._id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
               </td>
@@ -130,9 +175,14 @@
     </div>
   </div>
 
+  {% include "modal_database.html" %}
+
   <script>
     $('#add-query').on('shown.bs.modal', function () {
       $('#add-query-title').focus()
+    })
+    $('#add-database').on('shown.bs.modal', function () {
+      $('#add-database-title').focus()
     })
   </script>
 

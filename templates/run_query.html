@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block pagescripts %}
+
+  <link rel="stylesheet" href="/static/highlightjs/styles/railscasts.css">
+  <script src="/static/highlightjs/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+{% endblock %}
+
+{% block container %}
+
+  <a href="{{ url_for("index") }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  {% if run_enabled %}<a href="{{ url_for("query_edit", id=query._id) }}" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span> Edit</a>{% endif %}
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1>{% if run_enabled %}Results of {{ query.title }}{% else %}Disabled{% endif %}</h1>
+    </div>
+  </div>
+
+  <br/>
+
+  {% if run_enabled %}
+
+    {% if database %}
+
+      <h2>Query</h2>
+
+      <div class="row">
+        <div class="col-md-12">
+          <pre style="font-size: 16px"><code class="sql">{{ query.sql }}</code></pre>
+        </div>
+      </div>
+
+      <h2>Results</h2>
+
+      {% if error %}
+
+      <div class="row">
+        <div class="col-md-12 ">
+          <pre class="alert alert-danger" style="font-size: 16px">{{ error }}</pre>
+        </div>
+      </div>
+
+      {% endif %}
+
+      <div class="row">
+        <div class="col-md-12">
+        {% if query_results %}
+          <table class="col-md-12 table table-hover table-bordered">
+            <tr>
+            {% for col in query_results_cols %}
+              <th>{{ col }}</th>
+            {% endfor %}
+            </tr>
+          {% for row in query_results %}
+            <tr>
+            {% for col in row %}
+              <td>{{ col }}</td>
+            {% endfor %}
+            </tr>
+          {% endfor %}
+          </table>
+        {% else %}
+          <div class="alert alert-warning">No results returned</div>
+        {% endif %}
+        </div>
+      </div>
+    {% else %}
+    <div class="row">
+      <div class="col-md-12">{% if not query %}Query and {% endif %}Database not selected.</div>
+    </div>
+    {% endif %}
+  {% else %}
+    <div class="row">
+      <div class="col-md-12 text-danger">The ability to run queries has not been enabled.</div>
+    </div>
+  {% endif %}
+
+
+{% endblock %}
